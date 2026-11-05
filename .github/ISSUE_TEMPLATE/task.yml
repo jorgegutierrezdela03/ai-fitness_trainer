@@ -1,0 +1,32 @@
+name: Tarea / subtarea
+description: Crear una tarea del TFM con Definition of Done.
+title: "[P1-XX] "
+labels: ["phase-1", "task"]
+body:
+  - type: textarea
+    id: objective
+    attributes:
+      label: Objetivo
+      description: ¿Qué resultado concreto debe producir esta tarea?
+    validations:
+      required: true
+  - type: textarea
+    id: dod
+    attributes:
+      label: Definition of Done
+      description: Criterios verificables para cerrar la tarea.
+      placeholder: "- [ ] ..."
+    validations:
+      required: true
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependencias y bloqueos
+    validations:
+      required: false
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidencias / enlaces
+    validations:
+      required: false

@@ -1,0 +1,2 @@
+{"exercise_id":"EX-0001","name_es":"Press de banca con barra","name_en":"Barbell bench press","primary_muscles":["chest"],"secondary_muscles":["triceps","anterior_deltoid"],"equipment":["barbell","bench"],"movement_pattern":"horizontal_push","difficulty":"intermediate","aliases":["press banca"]}
+{"exercise_id":"EX-0002","name_es":"Jalón al pecho","name_en":"Lat pulldown","primary_muscles":["lats"],"secondary_muscles":["biceps","upper_back"],"equipment":["cable_machine"],"movement_pattern":"vertical_pull","difficulty":"beginner","aliases":["jalón polea"]}

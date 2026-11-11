@@ -71,8 +71,6 @@ Required. Select up to two primary objectives:
 ##### Training Availability
 - Available training days per week: Required.
 - Available session duration: Required.
-- Preferred training days: Optional.
-- Current training frequency: Optional.
 
 ##### Training Preferences and Restrictions
 Optional questions covering:

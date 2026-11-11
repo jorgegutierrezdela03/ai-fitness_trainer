@@ -1,4 +1,4 @@
-from fitevidence.schemas.benchmark import BenchmarkCase
+from fitevidence.schemas.user_profile import BenchmarkCase
 
 
 def test_example_benchmark_case_is_valid():

@@ -5,7 +5,7 @@ import argparse
 import json
 from pathlib import Path
 from pydantic import ValidationError
-from fitevidence.schemas.benchmark import BenchmarkCase
+from fitevidence.schemas.user_profile import BenchmarkCase
 
 
 def main() -> int:

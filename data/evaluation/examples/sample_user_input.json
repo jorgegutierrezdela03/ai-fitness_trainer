@@ -1,0 +1,29 @@
+{
+  "user_profile": {
+    "user_id": "USR-001",
+    "age": 28,
+    "sex": "Male",
+    "height_cm": 178.0,
+    "weight_kg": 76.5,
+    "experience_level": "Intermediate",
+    "primary_goals": [
+      "Hypertrophy",
+      "Strength"
+    ],
+    "available_days_per_week": 4,
+    "session_duration_minutes": 60,
+    "exercises_to_avoid": [
+      "Barbell Overhead Press"
+    ],
+    "equipment_limitations": [],
+    "preferred_training_style": "Resistance training",
+    "physical_limitations": {
+      "has_limitations": true,
+      "affected_areas": [
+        "Shoulder"
+      ],
+      "description": "Mild anterior shoulder impingement during deep overhead or wide pressing."
+    }
+  },
+  "session_request": "I want an upper body push workout focusing on chest and triceps, avoiding overhead shoulder strain."
+}

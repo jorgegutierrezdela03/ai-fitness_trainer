@@ -1,0 +1,109 @@
+{
+  "session_id": "SES-2026-0001",
+  "user_id": "USR-001",
+  "generated_at": "2026-11-11T10:30:00",
+  "exercise_ids_resolved": null,
+  "title": "Upper Body Push: Chest and Triceps Focus",
+  "main_focus": "Hypertrophy",
+  "estimated_duration_minutes": 60,
+  "warm_up": {
+    "general_activation": [
+      "5 minutes light rowing machine",
+      "Scapular wall slides 2x12"
+    ],
+    "specific_warmup": [
+      "Band pull-aparts 2x15",
+      "External shoulder rotations with band 2x15"
+    ],
+    "warmup_sets": [
+      "Incline Dumbbell Press: 1x10 at 50% working weight, 1x6 at 70% working weight"
+    ]
+  },
+  "main_block": [
+    {
+      "name": "Low-Incline Neutral-Grip Dumbbell Press",
+      "modality": "Strength",
+      "priority": "Primary",
+      "primary_muscle_group": "Chest",
+      "secondary_muscle_groups": [
+        "Triceps",
+        "Shoulders"
+      ],
+      "sets": 3,
+      "reps": "8-10",
+      "rest_seconds": 120,
+      "rpe": 8,
+      "duration_minutes": null,
+      "cardio_intensity": null,
+      "instructions": [
+        "Keep dumbbells at a 30-degree incline with neutral grip to protect the anterior shoulder.",
+        "Control the lowering phase over 2 seconds and stop just above chest level."
+      ]
+    },
+    {
+      "name": "Flat Dumbbell Press",
+      "modality": "Strength",
+      "priority": "Primary",
+      "primary_muscle_group": "Chest",
+      "secondary_muscle_groups": [
+        "Triceps"
+      ],
+      "sets": 3,
+      "reps": "8-10",
+      "rest_seconds": 120,
+      "rpe": 8,
+      "duration_minutes": null,
+      "cardio_intensity": null,
+      "instructions": [
+        "Maintain slight elbow tuck (roughly 45 degrees) relative to torso.",
+        "Retract scapulae before initiating the press."
+      ]
+    },
+    {
+      "name": "Cable Triceps Pushdown",
+      "modality": "Strength",
+      "priority": "Secondary",
+      "primary_muscle_group": "Triceps",
+      "secondary_muscle_groups": [],
+      "sets": 3,
+      "reps": "10-12",
+      "rest_seconds": 90,
+      "rpe": 8,
+      "duration_minutes": null,
+      "cardio_intensity": null,
+      "instructions": [
+        "Keep elbows pinned to your ribs throughout the full range of motion.",
+        "Pause for 1 second at full elbow extension."
+      ]
+    },
+    {
+      "name": "Overhead Cable Face Pull",
+      "modality": "Strength",
+      "priority": "Accessory",
+      "primary_muscle_group": "Shoulders",
+      "secondary_muscle_groups": [
+        "Back"
+      ],
+      "sets": 3,
+      "reps": "12-15",
+      "rest_seconds": 60,
+      "rpe": 7,
+      "duration_minutes": null,
+      "cardio_intensity": null,
+      "instructions": [
+        "Pull rope toward eye level while externally rotating forearms.",
+        "Focus on rear deltoid and rotator cuff engagement without shrugging."
+      ]
+    }
+  ],
+  "additional_cardio": null,
+  "cool_down": {
+    "exercises": [
+      "Doorway pectoral stretch 2x30s per side",
+      "Thoracic spine extension over foam roller 2 mins"
+    ],
+    "estimated_duration_minutes": 5,
+    "instructions": "Deep diaphragmatic breathing to lower sympathetic tone."
+  },
+  "general_notes": "All overhead vertical pressing was excluded to accommodate anterior shoulder discomfort. Prioritize controlled tempos over load increases."
+}

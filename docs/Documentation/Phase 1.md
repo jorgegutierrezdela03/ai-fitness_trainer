@@ -321,3 +321,26 @@ These suggestions are intended to guide users, not to impose a fixed input struc
   1. **Safety First (Physical Limitations):** Health restrictions declared in the user profile take absolute priority. If a natural language request conflicts with an active limitation, the system mandates respect for the physical restriction.
   2. **Session Specificity:** The free-text session request dictates the immediate focus of the workout (e.g., specific muscle focus or duration adjustments), provided it remains within the user's experience level and safety boundaries.
 - **Verification:** Input payload validation is governed by Pydantic V2 to ensure strict runtime enforcement before model invocation.
+
+### P1-03.3 — Define Base LLM Prompt Specification
+
+#### Objective
+Define the foundational system prompt structure for the LLM, establishing core responsibilities, generation guidelines, priority rules, and output constraints, while keeping it adaptable for future model iterations and RAG-based scientific grounding.
+
+#### Prompt Architecture & Design
+The base prompt is structured into four core modular steps:
+1. **Role and Responsibilities:** Establishes the persona of a professional personal trainer, defines operational boundaries (general fitness vs. clinical/medical exclusion), and mandates strict adherence to system instructions over conflicting user inputs.
+2. **Training Plan Generation Instructions:** Outlines core programming principles—personalization, logical exercise selection, appropriate parameters (sets, reps, RPE, rest), time management, and session coherence.
+3. **Behavior and Priority Rules:** Implements a strict hierarchical resolution order to resolve conflicts safely:
+   - 1. System instructions and safety constraints.
+   - 2. User's physical limitations.
+   - 3. Specific session request.
+   - 4. User profile background.
+   - 5. Conversation context.
+   - 6. Reasonable defaults.
+   - Also dictates ambiguity handling to prevent hallucinations and request clarification when essential data is missing.
+4. **Output Requirements:** Enforces structural compliance against the `TrainingPlanLLM` schema, explicitly prohibiting the generation of backend-managed metadata (such as session IDs or timestamps).
+
+#### Future Alignment (Phase 2 & Model Optimization)
+- **Extensibility:** The prompt design is intentionally modular to allow seamless integration of retrieved scientific evidence and exercise guidelines via **RAG (Retrieval-Augmented Generation)** in Phase 2.
+- **Model Agnosticism:** While drafted for robust general instruction-following, the prompt remains flexible for adaptation once the final production model (and its specific architectural token/structured output constraints) is selected.

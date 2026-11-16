@@ -130,3 +130,7 @@ class SessionGenerationInput(BaseModel):
         ..., min_length=3, max_length=500,
         description="Natural language request for the specific session (e.g., 'I want an upper body workout focused on back')."
     )
+    conversation_context: Optional[str] = Field(
+        None, max_length=1000,
+        description="Optional prior conversation context or history to help interpret follow-up requests."
+    )

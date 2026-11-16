@@ -262,3 +262,62 @@ Translate the training plan structure into a validated schema to enforce structu
   - `SystemTrainingPlanOutput`: Enriches `TrainingPlanLLM` with backend-managed identifiers and metadata (`session_id`, `user_id`, `generated_at`, `exercise_ids_resolved`), isolating runtime metadata from LLM prompt completion.
   - `ExerciseItem`: Enforces modality-specific integrity via cross-field validators (`Strength` requires sets, reps, rest, and RPE; `Cardio` requires duration and intensity; `Mobility` requires duration or reps). Constrains technical instructions to a maximum of two cues per exercise.
 - **Verification:** Full validation and negative test cases (boundary and modality contamination checks) are documented in `notebooks/schema_validation_demo.ipynb` using `data/evaluation/examples/training_plan_schema_validation.json`.
+
+
+## P1-03 — Define LLM interaction and Generation
+
+Define how users interact with the AI Fitness Trainer, how their structured profile and free-text request are provided to the LLM, and which instructions guide the generation of a structured training plan.
+
+### P1-03.1 — Define Chat Interaction and User Guidance
+
+#### Objective
+
+Define how users interact with the system immediately before generating a training plan, using a free-text chat input supported by brief guidance examples.
+
+#### 1. Chat Interaction
+
+The interaction will consist of three main elements:
+
+- **Welcome message:** A short message inviting the user to describe the training session they would like to perform.
+- **Chat input:** A free-text field where users can describe their training needs naturally.
+- **Guidance examples:** A set of optional suggestions displayed below the chat input to help users provide useful information.
+
+No mandatory fields or predefined questionnaire will be required.
+
+#### 2. Welcome Message
+
+The system will display the following introductory message:
+
+"Let's prepare your workout! Tell me what you would like to work on today, and we'll adapt the session to your needs."
+
+#### 3. User Guidance
+
+The system will provide optional examples of information users may include in their messages:
+
+- **Training goal or focus:** Muscle groups, full-body training, strength, hypertrophy, etc.
+- **Available time:** Expected workout duration.
+- **Preferences:** Preferred exercises, training styles or equipment.
+- **Restrictions:** Exercises or movements the user wants to avoid.
+- **Current condition:** Energy level, perceived fatigue or desired training intensity.
+
+These suggestions are intended to guide users, not to impose a fixed input structure.
+
+#### 4. Expected Behaviour
+
+- Users can submit requests using natural language.
+- All guidance examples are optional.
+- The system will combine the user's message with their existing profile information.
+- Missing information will be handled using reasonable defaults and available profile data.
+- The system may ask for clarification when the request is too ambiguous or essential information is missing.
+- Session-specific requests will not automatically modify the user's permanent profile.
+- The visual presentation and layout of these elements will be defined during frontend development.
+
+### P1-03.2 — Define LLM Input Structure and Priority Rules
+
+#### Implementation Summary
+- **Data Payload (`SessionGenerationInput`):** Combines the filtered `UserProfile`, the natural language `session_request`, and an optional `conversation_context` field for multi-turn chat tracking.
+- **Field Filtering & Optimization:** Internal system identifiers (`user_id`) and empty optional fields are excluded via serialization to optimize token consumption and minimize prompt noise.
+- **Conflict Resolution & Priority Rules:**
+  1. **Safety First (Physical Limitations):** Health restrictions declared in the user profile take absolute priority. If a natural language request conflicts with an active limitation, the system mandates respect for the physical restriction.
+  2. **Session Specificity:** The free-text session request dictates the immediate focus of the workout (e.g., specific muscle focus or duration adjustments), provided it remains within the user's experience level and safety boundaries.
+- **Verification:** Input payload validation is governed by Pydantic V2 to ensure strict runtime enforcement before model invocation.

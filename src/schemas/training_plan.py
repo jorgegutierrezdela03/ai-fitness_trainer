@@ -2,7 +2,17 @@
 
 from datetime import datetime
 from typing import List, Literal, Optional
-from pydantic import BaseModel, Field, model_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
+
+
+class StrictModel(BaseModel):
+    """Base for LLM-facing models: unknown fields are rejected, not silently dropped."""
+
+    model_config = ConfigDict(extra="forbid")
+
+
+# A single count ("12") or an ascending range ("8-10").
+REPS_PATTERN = r"^[1-9]\d{0,2}(-[1-9]\d{0,2})?$"
 
 # --- 1. CONTROLLED VOCABULARIES (Closed Options) ---
 MuscleGroup = Literal[
@@ -15,7 +25,7 @@ ModalityType = Literal["Strength", "Cardio", "Mobility"]
 
 
 # --- 2. SECONDARY SECTIONS (Warm-up, Additional Cardio, Cool-down) ---
-class WarmUpSection(BaseModel):
+class WarmUpSection(StrictModel):
     general_activation: Optional[List[str]] = Field(
         None, description="Joint mobility exercises or light cardiovascular activity."
     )
@@ -26,7 +36,7 @@ class WarmUpSection(BaseModel):
         None, description="Progressive preparation sets for the first main exercises, when appropriate."
     )
 
-class AdditionalCardioSection(BaseModel):
+class AdditionalCardioSection(StrictModel):
     activity_type: str = Field(
         ..., description="Type of cardiovascular activity (e.g., Treadmill walk, Rowing, Stationary bike)."
     )
@@ -40,7 +50,7 @@ class AdditionalCardioSection(BaseModel):
         None, description="Additional pacing or execution instructions, when appropriate."
     )
 
-class CoolDownSection(BaseModel):
+class CoolDownSection(StrictModel):
     exercises: List[str] = Field(
         ..., min_length=1, description="List of mobility or stretching exercises for recovery."
     )
@@ -53,7 +63,7 @@ class CoolDownSection(BaseModel):
 
 
 # --- 3. CORE COMPONENT: EXERCISE ITEM ---
-class ExerciseItem(BaseModel):
+class ExerciseItem(StrictModel):
     name: str = Field(
         ..., description="Standard, descriptive name of the exercise."
     )
@@ -77,7 +87,8 @@ class ExerciseItem(BaseModel):
         None, ge=1, le=15, description="Number of working sets (applicable to Strength or Mobility)."
     )
     reps: Optional[str] = Field(
-        None, description="Target repetitions or repetition range, e.g., '8-10' or '12' (for Strength or Mobility)."
+        None, pattern=REPS_PATTERN,
+        description="Target repetitions or ascending repetition range, e.g., '8-10' or '12' (for Strength or Mobility)."
     )
     rest_seconds: Optional[int] = Field(
         None, ge=0, le=600, description="Rest time between sets in seconds (required for Strength)."
@@ -98,6 +109,15 @@ class ExerciseItem(BaseModel):
         description="Brief, exercise-specific technical cues (maximum 2), adapted to user restrictions if applicable."
     )
 
+    @field_validator("reps")
+    @classmethod
+    def check_reps_range_is_ascending(cls, value: Optional[str]) -> Optional[str]:
+        if value and "-" in value:
+            low, high = (int(part) for part in value.split("-"))
+            if low >= high:
+                raise ValueError("A repetition range must be ascending, e.g., '8-10'.")
+        return value
+
     # Cross-field validator enforcing P1-02.1 modality rules (both required and forbidden fields)
     @model_validator(mode='after')
     def check_modality_parameters(self):
@@ -106,8 +126,10 @@ class ExerciseItem(BaseModel):
                 raise ValueError(
                     "Strength exercises require: sets, reps, rest_seconds, rpe, and primary_muscle_group."
                 )
-            if self.cardio_intensity is not None:
-                raise ValueError("Strength exercises must not include cardio_intensity.")
+            if self.cardio_intensity is not None or self.duration_minutes is not None:
+                raise ValueError(
+                    "Strength exercises must not include cardio_intensity or duration_minutes."
+                )
 
         elif self.modality == "Cardio":
             if None in (self.duration_minutes, self.cardio_intensity):
@@ -132,7 +154,7 @@ class ExerciseItem(BaseModel):
 
 
 # --- 4. MAIN LLM OUTPUT SCHEMA ---
-class TrainingPlanLLM(BaseModel):
+class TrainingPlanLLM(StrictModel):
     title: str = Field(
         ..., description="Descriptive title of the training session."
     )

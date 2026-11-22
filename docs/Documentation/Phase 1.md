@@ -344,3 +344,26 @@ The base prompt is structured into four core modular steps:
 #### Future Alignment (Phase 2 & Model Optimization)
 - **Extensibility:** The prompt design is intentionally modular to allow seamless integration of retrieved scientific evidence and exercise guidelines via **RAG (Retrieval-Augmented Generation)** in Phase 2.
 - **Model Agnosticism:** While drafted for robust general instruction-following, the prompt remains flexible for adaptation once the final production model (and its specific architectural token/structured output constraints) is selected.
+
+### P1-03.4 — Define Response Contract and Active Scope
+
+#### Objective
+Allow the LLM to decline to generate a plan when appropriate, and limit the first experimental iteration to strength and hypertrophy without closing the design to the remaining objectives.
+
+#### Active Scope
+- **Phase 1 scope:** Strength and hypertrophy, with strength exercises in the main block and no additional cardio section.
+- **Deferred objectives:** Fat loss, cardiovascular fitness, muscular endurance, and general fitness remain in the schemas and are enabled later.
+- **Single source of truth:** `ACTIVE_SCOPE` in `src/schemas/scope.py` drives both the system prompt and the post-hoc scope checks. Scope checks report violations and never modify a model output.
+- **Extension:** Enabling an objective requires a new `TrainingScope`, and is treated as an experimental change with a new prompt, benchmark, and evaluation version.
+
+#### Response Contract
+Defined in `src/schemas/llm_response.py` as a discriminated union on `response_type`:
+- `plan`: A valid `TrainingPlanLLM` session.
+- `clarification`: Up to three questions when essential information is missing.
+- `safety_referral`: No session is generated, due to warning signs, medical or rehabilitation requests, excluded populations, or dangerous demands.
+- `out_of_scope`: A safe request outside the active scope.
+
+#### Validation Hardening
+- LLM-facing models reject unknown fields, including backend-managed metadata.
+- Repetitions must be a positive count or an ascending range.
+- Strength exercises must not include a duration.

@@ -1,6 +1,22 @@
 # Backlog Fase 1 — índice de épicas y subtareas
 
-Las épicas y subtareas se cargan en GitHub como Issues y sub-issues mediante `scripts/bootstrap_github.py`. Estos Markdown son la copia documental local del backlog.
+Estos Markdown son la copia documental local del backlog.
+
+## Correspondencia con `docs/Documentation/Phase 1.md`
+
+La documentación y el backlog usan numeraciones distintas. Los identificadores de este backlog son la referencia para planificar; esta tabla indica dónde está documentado cada trabajo.
+
+| Sección en la documentación | Contenido | Tarea del backlog |
+|---|---|---|
+| P1-01.1 | Población y alcance | P1-01.1 |
+| P1-01.2 | Perfil de usuario | P1-01.2 |
+| P1-01.3 | Modelo de datos del perfil | P1-06.2 |
+| P1-02.1 | Estructura del plan | P1-01.3 |
+| P1-02.2 | Esquema JSON de salida | P1-06.2 |
+| P1-03.1 | Interacción por chat | P1-01.2 |
+| P1-03.2 | Estructura de entrada y prioridades | P1-01.2 |
+| P1-03.3 | Prompt base | P1-06.1 |
+| P1-03.4 | Contrato de respuesta y alcance activo | P1-01.1, P1-01.3 y P1-06.2 |
 
 ## P1-01 — [P1-01] Definir alcance, usuarios y requisitos del baseline
 Épica: [P1-01.md](P1-01.md) · Prioridad: **P0** · Área: **Research**

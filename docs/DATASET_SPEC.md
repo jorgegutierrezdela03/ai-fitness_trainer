@@ -26,24 +26,25 @@ Ejemplo:
   "case_id": "FE-0001",
   "split": "development",
   "profile": {
-    "age_years": 27,
-    "experience_level": "beginner",
-    "goal": "hypertrophy",
-    "training_days_per_week": 3,
+    "age": 27,
+    "experience_level": "Beginner",
+    "primary_goals": ["Hypertrophy"],
+    "available_days_per_week": 3,
     "session_duration_minutes": 50,
-    "equipment": ["full_gym"],
-    "restrictions": []
+    "physical_limitations": {"has_limitations": false}
   },
   "request": "Quiero entrenar pecho y tríceps.",
   "expected": {
-    "target_muscles": ["chest", "triceps"],
+    "response_type": "plan",
+    "target_muscles": ["Chest", "Triceps"],
     "max_duration_minutes": 50,
-    "must_respect_experience_level": true,
-    "clarification_expected": false
+    "must_respect_experience_level": true
   },
   "tags": ["beginner", "hypertrophy", "normal"]
 }
 ```
+
+`profile` sigue el esquema `UserProfile`. `expected.response_type` es `plan`, `clarification`, `safety_referral` u `out_of_scope`. Los objetivos fuera del alcance activo se usan en casos que esperan `out_of_scope` o en perfiles con un objetivo mixto.
 
 ## Cobertura sugerida
 

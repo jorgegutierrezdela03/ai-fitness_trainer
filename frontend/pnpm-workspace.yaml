@@ -1,0 +1,10 @@
+packages:
+  - "apps/*"
+  - "packages/*"
+
+# Added by pnpm: this version is newer than its default minimum release age.
+minimumReleaseAgeExclude:
+  - "@types/react@19.3.3"
+
+# React Native and Metro expect a flat node_modules layout.
+nodeLinker: hoisted

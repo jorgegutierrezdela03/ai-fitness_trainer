@@ -1,0 +1,7 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "customConditions": ["react-native"]
+  },
+  "include": ["src", "nativewind-env.d.ts"]
+}

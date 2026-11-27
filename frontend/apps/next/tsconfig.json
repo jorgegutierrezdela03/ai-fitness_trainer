@@ -1,0 +1,12 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "jsxImportSource": "nativewind",
+    "allowJs": false,
+    "incremental": true,
+    "plugins": [{ "name": "next" }]
+  },
+  "include": ["next-env.d.ts", "nativewind-env.d.ts", "app/**/*.ts", "app/**/*.tsx", "next.config.ts", ".next/types/**/*.ts"],
+  "exclude": ["node_modules"]
+}

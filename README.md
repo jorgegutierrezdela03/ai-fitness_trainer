@@ -16,52 +16,51 @@ Construir una línea base reproducible que reciba un perfil de usuario y una pet
 - Entrenamiento de fuerza e hipertrofia.
 - Entorno de gimnasio convencional.
 - Entrada: perfil estructurado + petición en español.
-- Salida: una sesión de entrenamiento JSON.
+- Salida: una respuesta JSON de tipo `plan`, `clarification`, `safety_referral` u `out_of_scope`.
 - Modelos de pesos abiertos ejecutados localmente como primera opción.
 - Sin nutrición, Computer Vision, voz, RL ni aplicación final en esta fase.
+
+### Ampliar el alcance
+
+Los esquemas conservan los demás objetivos y modalidades (pérdida de grasa, cardio, resistencia muscular y fitness general), pero solo se activan los definidos en `ACTIVE_SCOPE` (`src/schemas/scope.py`). Para ampliar el sistema, se crea un nuevo `TrainingScope` y se asigna a `ACTIVE_SCOPE`: el prompt y las comprobaciones de alcance se actualizan a partir de él. Cualquier ampliación es un cambio experimental y requiere nueva versión de prompt, benchmark y evaluación.
 
 ## Estructura
 
 ```text
 .
-├── docs/                 # Carta del proyecto, fase 1, protocolo y especificaciones
-├── project/              # Backlog estructurado y configuración del proyecto GitHub
+├── docs/                 # Documentación de fase 1, protocolo y especificaciones
 ├── issues/phase-1/       # Descripciones legibles de épicas y subtareas
 ├── data/
 │   ├── evaluation/       # Especificación y ejemplos del benchmark
 │   ├── exercise_catalog/ # Taxonomía de referencia para evaluar salidas (no se inyecta al baseline)
 │   ├── raw/              # Datos originales locales; no subir datos personales
 │   └── processed/        # Datos procesados locales
-├── src/fitevidence/      # Código fuente
-├── tests/                # Pruebas
-└── scripts/              # Automatización y utilidades
+├── notebooks/            # Demostraciones de validación
+├── src/
+│   ├── baseline/         # Generador baseline y construcción del prompt
+│   ├── evaluation/       # Métricas y evaluación
+│   ├── prompts/          # Prompts versionados
+│   └── schemas/          # Contratos de entrada y salida y alcance activo
+└── tests/                # Pruebas
 ```
 
 ## Primeros pasos
 
-1. Instalar Python 3.11 o 3.12, Git, GitHub CLI (`gh`) y Visual Studio Code.
-2. Extraer/abrir esta carpeta en VS Code.
-3. Crear un entorno virtual e instalar dependencias:
+1. Instalar [uv](https://docs.astral.sh/uv/), Git y Visual Studio Code.
+2. Crear el entorno e instalar dependencias:
 
-   **Windows (PowerShell)**
-   ```powershell
-   py -3.11 -m venv .venv
-   .\.venv\Scripts\Activate.ps1
-   python -m pip install --upgrade pip
-   pip install -e ".[dev]"
-   ```
-
-   **macOS/Linux**
    ```bash
-   python3.11 -m venv .venv
-   source .venv/bin/activate
-   python -m pip install --upgrade pip
-   pip install -e ".[dev]"
+   uv sync --extra dev
    ```
 
-4. Leer `docs/PHASE_1_PLAN.md` y `docs/EVALUATION_PROTOCOL.md`.
-5. Preparar GitHub con `gh auth login` y seguir `docs/GITHUB_PROJECT_SETUP.md`.
-6. Empezar por la épica `P1-01` del proyecto GitHub.
+3. Ejecutar las pruebas:
+
+   ```bash
+   uv run pytest
+   ```
+
+4. Leer `docs/Documentation/Phase 1.md` y `docs/EVALUATION_PROTOCOL.md`.
+5. Consultar el estado y la correspondencia del backlog en `issues/phase-1/README.md`.
 
 ## Modelo local
 

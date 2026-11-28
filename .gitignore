@@ -40,3 +40,4 @@ Thumbs.db
 # Experiment outputs and generated reports
 outputs/
 reports/generated/
+data/evaluation/runs/
